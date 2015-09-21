@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>What's new in ng-1.3</title>
+    <script type="text/javascript" src="../scipts/lib/jquery.js"></script>
+    <script type="text/javascript" src="../scipts/lib/angular.js"></script>
+    <script>
+        angular.module("whatsNew",[])
+                .directive('showMessage',function(){
+                    return {
+                        restrict : 'E',
+                        template  : '<input type="text" ng-model = "message">{{message}}',
+                        scope : {
+                            message : '='
+                        }
+                    }
+                })
+                .controller('whatsNewController',['$scope', function($scope){
+                    $scope.message = "Whats up?";
+                    $scope.myMessage = "Hi There..!"
+                    $scope.messages = ['message1','message2','message3'];
+                    $scope.addMessage = function(msg){
+                        $scope.messages.push(msg);
+                    }
+                }]);
+
+        var globalController = function($scope){
+            $scope.globalMessage = 'This message is from global controller...!';
+        }
+    </script>
+</head>
+<body ng-app="whatsNew">
+    <div ng-controller="whatsNewController">
+        <div> <input type="text" ng-model="message" /> <input type="text" ng-model="message" /><hr/>
+        <div>{{::message}}<hr/></div>
+        <div>{{message}}<hr/></div>
+        <input type="checkbox" ng-model="showRepeater">Show Repeater example
+        <div ng-if="showRepeater">
+            <table class="table">
+            <tr>
+                <td><div> <input type="text" ng-model="message" /></div></td>                
+                <td><div></div></td>                
+                <td></td>
+                <td><input type="button" ng-click="addMessage(message)" value="Add Message"/> </td>
+            </tr>
+            <tr>
+                <td colspan="2"><h2>2 way binding</h2></td>
+                <td colspan="2"><h2>1 way binding</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li ng-repeat="msg in messages">
+                            {{msg}}
+                        </li>
+                    </ul>
+                </td>
+                <td colspan="2">
+                    <ul>
+                        <li ng-repeat="msg in ::messages">
+                            {{msg}}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <div> No of messages  available : {{messages.length}}</div>
+        </div>
+        
+<hr/>
+        <input type="checkbox" ng-model="showDirective">Show directive example
+        
+        <div ng-if="showDirective">
+            <input type="text" ng-model="myMessage"><hr/>
+            <show-message message="::myMessage"></show-message></br>
+            <show-message message="myMessage"></show-message>
+         </div>
+    </div>
+</body>
+</html>

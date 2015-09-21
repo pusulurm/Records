@@ -1,0 +1,5 @@
+live-server --entry-file="OneTimeBinding.html"
+live-server --entry-file="disableScopeInfo.html"
+live-server --entry-file="globalController.html"
+live-server --entry-file="angularForeachNewParam.html"
+live-server --entry-file="strictDI.html"
